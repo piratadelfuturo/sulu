@@ -35,7 +35,9 @@ class XmlLegacyLoader implements LoaderInterface
      * @var array
      */
     private $requiredPropertyNames = [
-        'title',
+        'page' => ['title'],
+        'home' => ['title'],
+        'snippet' => ['title'],
     ];
 
     /**
@@ -95,24 +97,27 @@ class XmlLegacyLoader implements LoaderInterface
         $result['properties'] = $this->loadProperties($result['key'], '/x:template/x:properties/x:*', $tags, $xpath);
 
         // check if required properties are existing
-        foreach ($this->requiredPropertyNames as $requiredPropertyName) {
-            $requiredPropertyNameFound = false;
-            if (array_key_exists($requiredPropertyName, $result['properties'])) {
-                $requiredPropertyNameFound = true;
-            }
+        if (isset($this->requiredPropertyNames[$type])) {
+            foreach ($this->requiredPropertyNames[$type] as $requiredPropertyName) {
 
-            // check all section properties as well
-            foreach ($result['properties'] as $property) {
-                if (!$requiredPropertyNameFound
-                    && $property['type'] == 'section'
-                    && array_key_exists($requiredPropertyName, $property['properties'])
-                ) {
+                $requiredPropertyNameFound = false;
+                if (array_key_exists($requiredPropertyName, $result['properties'])) {
                     $requiredPropertyNameFound = true;
                 }
-            }
 
-            if (!$requiredPropertyNameFound) {
-                throw new RequiredPropertyNameNotFoundException($result['key'], $requiredPropertyName);
+                // check all section properties as well
+                foreach ($result['properties'] as $property) {
+                    if (!$requiredPropertyNameFound
+                        && $property['type'] == 'section'
+                        && array_key_exists($requiredPropertyName, $property['properties'])
+                    ) {
+                        $requiredPropertyNameFound = true;
+                    }
+                }
+
+                if (!$requiredPropertyNameFound) {
+                    throw new RequiredPropertyNameNotFoundException($result['key'], $requiredPropertyName);
+                }
             }
         }
 
@@ -164,6 +169,10 @@ class XmlLegacyLoader implements LoaderInterface
         } else {
             $result = [
                 'key' => $this->getValueFromXPath('/x:template/x:key', $xpath),
+                'view' => $this->getValueFromXPath('/x:template/x:view', $xpath),
+                'controller' => $this->getValueFromXPath('/x:template/x:controller', $xpath),
+                'cacheLifetime' => intval($this->getValueFromXPath('/x:template/x:cacheLifetime', $xpath)),
+                'tags' => $this->loadStructureTags('/x:template/x:tag', $xpath),
                 'meta' => $this->loadMeta('/x:template/x:meta/x:*', $xpath),
             ];
 
