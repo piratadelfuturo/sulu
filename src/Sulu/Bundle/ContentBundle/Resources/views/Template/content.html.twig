@@ -1,5 +1,7 @@
 <form id="content-form" class="grid">
 
+    {% block custom %}{% endblock %}
+
     {# if first property is a section render it as the highlighted section#}
     {% set firstSection = null %}
     {% if template.properties|length > 0 %}
