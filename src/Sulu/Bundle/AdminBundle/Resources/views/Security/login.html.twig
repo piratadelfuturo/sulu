@@ -14,10 +14,10 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <!-- build:css login.min.css -->
-    <link rel="stylesheet" type="text/css" href="/bundles/suluadmin/js/vendor/husky/husky.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/suluadmin/js/vendor/husky/husky.min.css') }}"/>
     <!-- endbuild -->
 
-    <link rel="stylesheet" type="text/css" href="/bundles/suluadmin/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/suluadmin/css/main.css') }}"/>
 </head>
 <body>
     <div id="main" class="login">
@@ -48,7 +48,7 @@
     </script>
 
     <!-- build:js login.min.js -->
-    <script data-main="/bundles/suluadmin/js/login" src="/bundles/suluadmin/js/vendor/husky/husky.js"></script>
+    <script data-main="{{ asset('bundles/suluadmin/js/login') }}" src="{{ asset('bundles/suluadmin/js/vendor/husky/husky.js') }}"></script>
     <!-- endbuild -->
 </body>
 </html>
