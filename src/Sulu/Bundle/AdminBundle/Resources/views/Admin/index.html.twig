@@ -13,8 +13,8 @@
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <!-- build:css app.min.css -->
-        <link rel="stylesheet" type="text/css" href="/bundles/suluadmin/js/vendor/husky/husky.min.css"/>
-        <link rel="stylesheet" type="text/css" href="/bundles/suluadmin/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/suluadmin/js/vendor/husky/husky.min.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/suluadmin/css/main.css') }}"/>
         <!-- endbuild -->
     </head>
     <body>
@@ -25,7 +25,7 @@
         <div id="main" data-aura-component="app@suluadmin" data-aura-user="{{ user| json_encode }}">
             <div class="navigation-container">
                 <div class="sulu-navigation-labels"></div>
-                <div data-aura-component="navigation@husky" data-aura-url="/admin/navigation" data-aura-collapse="true"
+                <div data-aura-component="navigation@husky" data-aura-url="{{ path('get_navigation') }}" data-aura-collapse="true"
                      data-aura-user-name="{{ user.fullName }}"
                      data-aura-system-name="{{ name }}"
                      data-aura-system-version="{{ suluVersion }}"
@@ -67,11 +67,11 @@
             {% endautoescape %}
 
             // CKEditor needs base path to load some other files
-            var CKEDITOR_BASEPATH = '/bundles/suluadmin/js/vendor/husky/vendor/ckeditor/';
+            var CKEDITOR_BASEPATH = '{{ asset('bundles/suluadmin/js/vendor/husky/vendor/ckeditor/') }}';
         </script>
 
         <!-- build:js app.min.js -->
-        <script data-main="/bundles/suluadmin/js/main" src="/bundles/suluadmin/js/vendor/husky/husky.js"></script>
+        <script data-main="{{ asset('bundles/suluadmin/js/main') }}" src="{{ asset('bundles/suluadmin/js/vendor/husky/husky.js') }}"></script>
         <!-- endbuild -->
     </body>
 </html>
